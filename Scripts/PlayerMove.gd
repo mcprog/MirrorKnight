@@ -8,6 +8,7 @@ export var speed = 30
 const attack_time = 0.9
 
 var attack_timer
+var velocity = Vector2()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,7 +36,7 @@ func set_animation(name):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var velocity = Vector2()
+	velocity = Vector2()
 	
 	attack_timer += delta
 	
@@ -58,5 +59,8 @@ func _process(delta):
 		velocity = velocity.normalized() * speed
 	else:
 		set_animation("Idle");
-	position += velocity * delta
+	#position += velocity * delta
+
+func _physics_process(delta):
+	move_and_slide(velocity);
 	
