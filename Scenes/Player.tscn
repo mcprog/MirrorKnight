@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Sprites/knight.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/PlayerMove.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/spot.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 3.10343, 8.02542 )
+extents = Vector2( 3.04515, 9.99111 )
 
 [sub_resource type="Animation" id=6]
 resource_name = "AttackDown"
@@ -168,15 +169,19 @@ tracks/0/keys = {
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 3 )
+shadow_enabled = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.25, 0.25 )
+
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 vframes = 12
 hframes = 5
 frame = 9
-
-[node name="Camera2D" type="Camera2D" parent="Sprite"]
-current = true
-zoom = Vector2( 0.25, 0.25 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
