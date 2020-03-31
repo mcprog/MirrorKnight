@@ -33,6 +33,8 @@ func attack(velocity):
 func attack_done():
 	var enemies = $Area2D.get_overlapping_bodies();
 	print("count:" + str(enemies.size()))
+	for enemy in enemies:
+		print(str(enemy.health));
 
 func set_animation(name):
 	if attack_timer >= attack_time:

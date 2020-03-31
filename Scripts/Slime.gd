@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+const Attacks = preload("res://Attacks.gd")
+
 const jump_distance = 13
 # Declare member variables here. Examples:
 # var a = 2
@@ -31,6 +33,8 @@ export(float) var energy_hurt_speed = 2.5
 
 var pulse_speed_factor = 1
 
+var armor = Attacks.Un
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	state = State.Idle
@@ -39,8 +43,9 @@ func _ready():
 func set_animation(state, color_type):
 	$AnimationPlayer.play(ColorType.keys()[color_type] + State.keys()[state])
 
-func set_attacked():
+func handle_attack(damage, ):
 	next_state = State.Roll
+	var dmg = Attacks.effective_damage()
 
 # for when the enemy is dead
 func pop():
