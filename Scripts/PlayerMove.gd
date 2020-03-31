@@ -18,9 +18,9 @@ func attack(velocity):
 	if attack_timer < attack_time:
 		return
 	attack_timer = 0
-	if velocity.x == 1:
+	if velocity.x > 0:
 		$AnimationPlayer.play("AttackRight")
-	elif velocity.x == -1:
+	elif velocity.x < 0:
 		$AnimationPlayer.play("AttackLeft")
 	elif velocity.y == 1:
 		$AnimationPlayer.play("AttackDown")
@@ -48,10 +48,12 @@ func _process(delta):
 		set_animation("WalkRight");
 	if Input.is_action_pressed("ui_up"):
 		velocity.y -= 1
-		set_animation("WalkUp");
+		if velocity.x == 0:
+			set_animation("WalkUp");
 	if Input.is_action_pressed("ui_down"):
 		velocity.y += 1
-		set_animation("WalkDown");
+		if velocity.x == 0:
+			set_animation("WalkDown");
 	if Input.is_action_just_pressed("attack"):
 		attack(velocity)
 	
