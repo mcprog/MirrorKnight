@@ -3,7 +3,8 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export var speed = 30
+export var speed = 45
+export(int) var health = 20
 
 const attack_time = 0.9
 
@@ -28,7 +29,10 @@ func attack(velocity):
 		$AnimationPlayer.play("AttackUp")
 	else:
 		$AnimationPlayer.play("AttackDown")
-	
+
+func attack_done():
+	var enemies = $Area2D.get_overlapping_bodies();
+	print("count:" + str(enemies.size()))
 
 func set_animation(name):
 	if attack_timer >= attack_time:

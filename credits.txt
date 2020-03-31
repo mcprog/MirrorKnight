@@ -1,3 +1,4 @@
 dirt2.png - https://opengameart.org/content/dirt-001s://opengameart.org/content/dirt-001
 knight.png - https://opengameart.org/content/simple-knight
-
+signpost-outsidestuff.png - https://opengameart.org/content/lpc-signposts-graves-line-cloths-and-scare-crow
+UnZialish.ttf - https://www.dafont.com/unzialish.font

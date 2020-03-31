@@ -1,4 +1,4 @@
-extends Area2D
+extends KinematicBody2D
 
 const jump_distance = 13
 # Declare member variables here. Examples:
@@ -18,6 +18,8 @@ var next_state
 const EnergyHurt = 2
 const EnergyDe = 0
 const EnergyNormal = 1
+const EnergyLowPulse = 0.65
+const EnergyPulseFactor = 0.45
 var energy_target = EnergyNormal
 
 
@@ -25,6 +27,9 @@ export(ColorType) var color
 
 export var health = 5
 export(float) var energy_speed = 1.25
+export(float) var energy_hurt_speed = 2.5
+
+var pulse_speed_factor = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -60,18 +65,28 @@ func _process(delta):
 		pop()
 	
 	# energy logic
-	if energy_target == EnergyNormal and $Light2D.energy < EnergyNormal:
-		$Light2D.energy += delta * energy_speed
+	if energy_target == EnergyNormal:
+		if $Light2D.energy < EnergyNormal:
+			$Light2D.energy += delta * energy_speed * pulse_speed_factor
+		else:
+			energy_target = EnergyLowPulse
+			pulse_speed_factor = EnergyPulseFactor
 	elif energy_target == EnergyHurt and $Light2D.energy < EnergyHurt:
-		$Light2D.energy += delta * energy_speed
+		$Light2D.energy += delta * energy_hurt_speed
 	elif energy_target == EnergyDe and $Light2D.energy > EnergyDe:
 		$Light2D.energy -= delta * energy_speed
+	elif energy_target == EnergyLowPulse:
+		if $Light2D.energy > EnergyLowPulse:
+			$Light2D.energy -= delta * energy_speed * pulse_speed_factor
+		else:
+			energy_target = EnergyNormal
 	 
 
 
-func _on_Slime_body_entered(body):
+func _on_Area2D_body_entered(body):
 	energy_target = EnergyDe
+	pulse_speed_factor = 1;
 
 
-func _on_Slime_body_exited(body):
+func _on_Area2D_body_exited(body):
 	energy_target = EnergyNormal

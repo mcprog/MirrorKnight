@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Sprites/knight.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/PlayerMove.gd" type="Script" id=2]
-[ext_resource path="res://Sprites/spot.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.04515, 9.99111 )
@@ -10,7 +9,6 @@ extents = Vector2( 3.04515, 9.99111 )
 [sub_resource type="Animation" id=2]
 resource_name = "AttackDown"
 length = 0.9
-loop = true
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -23,6 +21,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 20, 21, 22, 23, 24 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_done"
+} ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -42,6 +54,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 30, 31, 32, 33, 34 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_done"
+} ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "AttackRight"
@@ -60,6 +86,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 35, 36, 37, 38, 39 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_done"
+} ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "AttackUp"
@@ -77,6 +117,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 25, 26, 27, 28, 29 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_done"
+} ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -162,13 +216,12 @@ tracks/0/keys = {
 "values": [ 5, 6, 7, 8, 9 ]
 }
 
+[sub_resource type="CircleShape2D" id=11]
+radius = 12.4277
+
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
-
-[node name="Light2D" type="Light2D" parent="."]
-texture = ExtResource( 3 )
-shadow_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -178,7 +231,7 @@ zoom = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 vframes = 12
 hframes = 5
-frame = 9
+frame = 28
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -193,3 +246,10 @@ anims/WalkDown = SubResource( 7 )
 anims/WalkLeft = SubResource( 8 )
 anims/WalkRight = SubResource( 9 )
 anims/WalkUp = SubResource( 10 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 11 )

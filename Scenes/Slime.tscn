@@ -1,11 +1,26 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Sprites/slime spritesheet calciumtrice.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Slime.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/spot.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 5.08529
+radius = 5.01806
+
+[sub_resource type="Animation" id=6]
+resource_name = "GreenDie"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 40, 41, 42, 43, 44, 45, 46, 47, 48, 49 ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "GreenIdle"
@@ -25,6 +40,22 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
+[sub_resource type="Animation" id=4]
+resource_name = "GreenJump"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 20, 21, 22, 23, 24, 25, 26, 27, 28, 29 ]
+}
+
 [sub_resource type="Animation" id=3]
 resource_name = "GreenRoll"
 step = 0.05
@@ -41,10 +72,27 @@ tracks/0/keys = {
 "values": [ 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ]
 }
 
-[node name="Slime" type="Area2D"]
+[sub_resource type="Animation" id=5]
+resource_name = "GreenSpit"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 ]
+}
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 9.09616
+
+[node name="Slime" type="KinematicBody2D"]
 z_index = -1
 collision_layer = 4
-collision_mask = 2
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -55,16 +103,25 @@ position = Vector2( 0, -10 )
 texture = ExtResource( 1 )
 vframes = 20
 hframes = 10
-frame = 19
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/GreenDie = SubResource( 6 )
 anims/GreenIdle = SubResource( 2 )
+anims/GreenJump = SubResource( 4 )
 anims/GreenRoll = SubResource( 3 )
+anims/GreenSpit = SubResource( 5 )
 
 [node name="Light2D" type="Light2D" parent="."]
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 3 )
 color = Color( 0.352941, 0.992157, 0.572549, 1 )
 energy = 1.49
-[connection signal="body_entered" from="." to="." method="_on_Slime_body_entered"]
-[connection signal="body_exited" from="." to="." method="_on_Slime_body_exited"]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 7 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
