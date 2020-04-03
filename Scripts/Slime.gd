@@ -3,6 +3,7 @@ extends KinematicBody2D
 const Attacks = preload("res://Attacks.gd")
 
 const jump_distance = 13
+const scan_speed = 100
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -26,6 +27,7 @@ var energy_target = EnergyNormal
 
 
 export(ColorType) var color
+export(float) var speed = 30
 
 export var health = 5
 export(float) var energy_speed = 1.25
@@ -33,7 +35,9 @@ export(float) var energy_hurt_speed = 2.5
 
 var pulse_speed_factor = 1
 
-var armor = Attacks.Un
+var armor = Attacks.NoArmor
+
+var velocity = Vector2();
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -43,9 +47,9 @@ func _ready():
 func set_animation(state, color_type):
 	$AnimationPlayer.play(ColorType.keys()[color_type] + State.keys()[state])
 
-func handle_attack(damage, ):
+func handle_attack(damage):
 	next_state = State.Roll
-	var dmg = Attacks.effective_damage()
+	#var dmg = Attacks.effective_damage()
 
 # for when the enemy is dead
 func pop():
@@ -53,9 +57,20 @@ func pop():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	velocity = Vector2();
 	if state == State.Idle:
-		# set idle animation and reset attacks
-		pass
+		
+		if $RayCast2D.is_colliding():
+			velocity = Vector2.DOWN.rotated($RayCast2D.rotation)
+			$RayCast2D2.rotation = $RayCast2D.rotation
+			$RayCast2D2.rotation_degrees -= scan_speed * delta
+		elif $RayCast2D2.is_colliding():
+			velocity = Vector2.DOWN.rotated($RayCast2D2.rotation)
+			$RayCast2D.rotation = $RayCast2D2.rotation
+			$RayCast2D.rotation_degrees += scan_speed * delta
+		else:
+			$RayCast2D.rotation_degrees += scan_speed * delta
+			$RayCast2D2.rotation_degrees -= scan_speed * delta
 	elif state == State.Roll:
 		# set rool animation, pause movement, do damage
 		pass
@@ -68,6 +83,9 @@ func _process(delta):
 	else:
 		# run death animation, then pop
 		pop()
+		
+	if velocity.length() > 0:
+		velocity = velocity.normalized() * speed
 	
 	# energy logic
 	if energy_target == EnergyNormal:
@@ -86,7 +104,8 @@ func _process(delta):
 		else:
 			energy_target = EnergyNormal
 	 
-
+func _physics_process(delta):
+	move_and_slide(velocity)
 
 func _on_Area2D_body_entered(body):
 	energy_target = EnergyDe

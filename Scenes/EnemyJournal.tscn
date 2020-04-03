@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/EnemyJournal.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/unzialish.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Sprites/slime-icon.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/renner_title.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Fonts/renner.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Sprites/slime-icon.png" type="Texture" id=5]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "Hide"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
@@ -33,8 +35,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "Show"
+[sub_resource type="Animation" id=2]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
 tracks/0/interp = 2
@@ -236,7 +237,7 @@ margin_bottom = 210.0
 rect_min_size = Vector2( 100, 100 )
 text = "Golem"
 
-[node name="Label" type="Label" parent="Panel"]
+[node name="Title" type="Label" parent="Panel"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -253,44 +254,285 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Detail" type="HBoxContainer" parent="Panel"]
+[node name="Detail" type="Control" parent="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/separation = 30
-alignment = 1
+margin_bottom = -60.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Left" type="VBoxContainer" parent="Panel/Detail"]
-margin_left = 143.0
-margin_right = 498.0
-margin_bottom = 560.0
-
-[node name="Name" type="Label" parent="Panel/Detail/Left"]
-margin_right = 355.0
-margin_bottom = 54.0
-custom_fonts/font = ExtResource( 2 )
-text = "Enemy Name"
-
-[node name="Right" type="VBoxContainer" parent="Panel/Detail"]
-margin_left = 528.0
-margin_right = 841.0
-margin_bottom = 560.0
-
-[node name="TextureRect" type="TextureRect" parent="Panel/Detail/Right"]
-margin_right = 313.0
-margin_bottom = 16.0
-texture = ExtResource( 3 )
-
-[node name="ExpLabel" type="Label" parent="Panel/Detail/Right"]
-margin_top = 20.0
-margin_right = 313.0
-margin_bottom = 74.0
+[node name="ExpLabel" type="Label" parent="Panel/Detail"]
+margin_left = 522.188
+margin_top = 117.803
+margin_right = 835.189
+margin_bottom = 171.803
+rect_scale = Vector2( 0.3, 0.3 )
 custom_fonts/font = ExtResource( 2 )
 text = "Experience"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="About" type="ColorRect" parent="Panel/Detail"]
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 320.0
+margin_bottom = 3.05176e-05
+color = Color( 0.0862745, 0.0862745, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="Panel/Detail/About"]
+margin_left = 10.0
+margin_right = 147.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 3 )
+text = "Enemy Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Variety" type="Label" parent="Panel/Detail/About"]
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 37.0
+margin_right = 285.0
+margin_bottom = -335.0
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "variety data"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Weakness" type="Label" parent="Panel/Detail/About"]
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 145.0
+margin_right = 285.0
+margin_bottom = -226.0
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "weakness data"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Feature" type="Label" parent="Panel/Detail/About"]
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 253.0
+margin_right = 285.0
+margin_bottom = -118.0
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "weakness data"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Drops" type="Label" parent="Panel/Detail/About"]
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 361.0
+margin_right = 285.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "drops data"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stats" type="ColorRect" parent="Panel/Detail"]
+anchor_bottom = 1.0
+margin_left = 337.63
+margin_top = 17.6673
+margin_right = 637.63
+margin_bottom = -2.3327
+color = Color( 0.0862745, 0.0862745, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="TextureRect" parent="Panel/Detail/Stats"]
+margin_left = 10.0
+margin_top = 10.0
+rect_scale = Vector2( 8, 8 )
+texture = ExtResource( 5 )
+
+[node name="Stats" type="Label" parent="Panel/Detail/Stats"]
+margin_left = 10.0
+margin_top = 133.758
+margin_right = 99.6349
+margin_bottom = 167.758
+custom_fonts/font = ExtResource( 3 )
+text = "Statistics"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exp" type="Label" parent="Panel/Detail/Stats"]
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 172.0
+margin_right = 128.0
+margin_bottom = -282.0
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "exp_lvl:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExpVal" type="Label" parent="Panel/Detail/Stats"]
+anchor_bottom = 1.0
+margin_left = 167.435
+margin_top = 172.0
+margin_right = 280.435
+margin_bottom = -282.0
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Kills" type="Label" parent="Panel/Detail/Stats"]
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 202.0
+margin_right = 155.0
+margin_bottom = -252.0
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "kills:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KillsVal" type="Label" parent="Panel/Detail/Stats"]
+anchor_bottom = 1.0
+margin_left = 167.435
+margin_top = 202.139
+margin_right = 280.435
+margin_bottom = -251.861
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Deaths" type="Label" parent="Panel/Detail/Stats"]
+anchor_bottom = 1.0
+margin_left = 13.0
+margin_top = 231.0
+margin_right = 148.0
+margin_bottom = -223.0
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "deaths_to:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeathsVal" type="Label" parent="Panel/Detail/Stats"]
+anchor_bottom = 1.0
+margin_left = 146.787
+margin_top = 231.0
+margin_right = 281.787
+margin_bottom = -223.0
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Crit" type="Label" parent="Panel/Detail/Stats"]
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = 263.0
+margin_right = 143.0
+margin_bottom = -191.0
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "crit:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CritVal" type="Label" parent="Panel/Detail/Stats"]
+anchor_bottom = 1.0
+margin_left = 146.787
+margin_top = 262.609
+margin_right = 281.787
+margin_bottom = -191.391
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Super" type="Label" parent="Panel/Detail/Stats"]
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 290.0
+margin_right = 124.0
+margin_bottom = -164.0
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "supercritical:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SuperVal" type="Label" parent="Panel/Detail/Stats"]
+anchor_bottom = 1.0
+margin_left = 146.787
+margin_top = 292.013
+margin_right = 281.787
+margin_bottom = -161.987
+rect_pivot_offset = Vector2( 75, 33 )
+custom_fonts/font = ExtResource( 4 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AddKill" type="Button" parent="Panel/Detail/Stats"]
+margin_left = 167.807
+margin_top = 203.803
+margin_right = 206.807
+margin_bottom = 223.803
+text = "+kill"
+
+[node name="AddDeath" type="Button" parent="Panel/Detail/Stats"]
+margin_left = 167.963
+margin_top = 231.721
+margin_right = 223.963
+margin_bottom = 251.721
+text = "+death"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Hide = SubResource( 2 )
-anims/Show = SubResource( 1 )
+anims/Hide = SubResource( 1 )
+anims/Show = SubResource( 2 )
 [connection signal="pressed" from="Panel/Close" to="." method="_on_Close_pressed"]
+[connection signal="pressed" from="Panel/Dex/MarginContainer/GridContainer/Slime" to="." method="_on_Slime_pressed"]
+[connection signal="pressed" from="Panel/Dex/MarginContainer/GridContainer/Bat" to="." method="_on_Bat_pressed"]
+[connection signal="pressed" from="Panel/Detail/Stats/AddKill" to="." method="_on_AddKill_pressed"]
+[connection signal="pressed" from="Panel/Detail/Stats/AddDeath" to="." method="_on_AddDeath_pressed"]

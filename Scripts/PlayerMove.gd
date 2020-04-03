@@ -34,6 +34,7 @@ func attack_done():
 	var enemies = $Area2D.get_overlapping_bodies();
 	print("count:" + str(enemies.size()))
 	for enemy in enemies:
+		enemy.pop();
 		print(str(enemy.health));
 
 func set_animation(name):
