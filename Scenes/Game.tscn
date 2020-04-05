@@ -573,6 +573,9 @@ points = PoolVector2Array( 16, 15, 1, 15, 1, 1, 16, 1 )
 
 [node name="Node2D" type="Node2D"]
 
+[node name="Ui" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 12.2943, 72.7951 )
 z_index = 2

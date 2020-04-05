@@ -1,9 +1,9 @@
 extends KinematicBody2D
 
 const Attacks = preload("res://Scripts/Attacks.gd")
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+const HitPopup = preload("res://Scenes/HitPopup.tscn")
+const HitPopupClass = preload("res://Scripts/HitPopup.gd")
+
 export var speed = 45
 export(int) var health = 20
 export(float) var dmg_done = 3
@@ -14,6 +14,7 @@ const attack_time = 0.9
 var attack_timer
 var velocity = Vector2()
 
+var armor = Attacks.NoArmor
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -42,8 +43,15 @@ func attack_done():
 		print("severity found= " + str(severity))
 		enemy.handle_attack(dmg_done, Attacks.AttackType.Normal, severity)
 
-func handle_attack():
+func handle_attack(damage, type):
 	print("ow")
+	var dmg = Attacks.effective_damage(damage, type, Attacks.AttackSeverity.Normal, armor)
+	var instance = HitPopup.instance()
+	HitPopupClass.init(instance, -dmg, position)
+	get_parent().get_child(0).add_child(instance)
+	health -= dmg;
+	if (health <= 0):
+		print("im ded")
 
 func set_animation(name):
 	if attack_timer >= attack_time:

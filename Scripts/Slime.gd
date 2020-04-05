@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 const Attacks = preload("res://Scripts/Attacks.gd")
 const HitPopup = preload("res://Scenes/HitPopup.tscn")
+const HitPopupClass = preload("res://Scripts/HitPopup.gd")
 
 const jump_distance = 13
 const scan_speed = 100
@@ -9,11 +10,11 @@ const scan_speed = 100
 # var a = 2
 # var b = "text"
 enum State {
-	Idle, Roll, Jump, Spit, Die
+	Idle, Roll, Jump, Charge, Spit, Die
 }
 
 enum ColorType {
-	Green, Blue, Red, Yellow
+	Yellow, Red, Green, Blue
 }
 
 var prev_state
@@ -32,6 +33,7 @@ export(ColorType) var color
 export(float) var speed = 30
 
 export var health = 5
+export var attack_strength = 1
 export(float) var energy_speed = 1.25
 export(float) var energy_hurt_speed = 2.5
 
@@ -52,18 +54,16 @@ func set_animation(state, color_type):
 	$AnimationPlayer.play(ColorType.keys()[color_type] + State.keys()[state])
 
 func handle_attack(damage, type, severity):
-	print("raw dmg=" + str(damage))
 	next_state = State.Roll
 	var dmg = Attacks.effective_damage(damage, type, severity, armor)
-	print("dmg=" + str(dmg))
 	var instance = HitPopup.instance()
-	instance.val = dmg
-	instance.position = position
-	print(str(instance.position))
-	get_parent().add_child(instance)
+	HitPopupClass.init(instance, dmg, position)
+	get_parent().get_child(0).add_child(instance)
 	health -= dmg;
 	if (health <= 0):
 		next_state = State.Die
+	else:
+		energy_target = EnergyHurt
 
 # imma make you pop like that
 # for when the enemy is dead
@@ -73,7 +73,7 @@ func pop():
 func attack():
 	if victim == null:
 		return;
-	victim.handle_attack()
+	victim.handle_attack(attack_strength, color)
 
 # returns true if neither ray sees the player
 func check_rays(delta) -> bool:
@@ -116,8 +116,16 @@ func _process(delta):
 		
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
+		if velocity.x > 0:
+			$Sprite.flip_h = true
+		else:
+			$Sprite.flip_h = false
 	
-	# energy logic
+	
+	update_lighting(delta)
+
+# energy logic
+func update_lighting(delta):
 	if energy_target == EnergyNormal:
 		if $Light2D.energy < EnergyNormal:
 			$Light2D.energy += delta * energy_speed * pulse_speed_factor
@@ -134,8 +142,16 @@ func _process(delta):
 		else:
 			energy_target = EnergyNormal
 
+func charge_up():
+	next_state = State.Charge
+
+func on_charged():
+	next_state = State.Spit
+
 func revert_state():
 	next_state = State.Idle
+	if (victim != null):
+		next_state = State.Charge
 	 
 func _physics_process(delta):
 	move_and_slide(velocity)
@@ -143,8 +159,9 @@ func _physics_process(delta):
 func _on_Area2D_body_entered(body):
 	energy_target = EnergyDe
 	pulse_speed_factor = 1;
-	next_state = State.Spit
+	
 	victim = body
+	charge_up()
 
 
 func _on_Area2D_body_exited(body):
