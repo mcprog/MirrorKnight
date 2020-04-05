@@ -21,6 +21,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 40, 41, 42, 43, 44, 45, 46, 47, 48, 49 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "pop"
+} ]
+}
 
 [sub_resource type="Animation" id=3]
 length = 1.45
@@ -41,6 +55,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "GreenJump"
+loop = true
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -69,6 +84,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "revert_state"
+} ]
+}
 
 [sub_resource type="Animation" id=6]
 tracks/0/type = "value"
@@ -82,6 +111,23 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack"
+}, {
+"args": [  ],
+"method": "revert_state"
+} ]
 }
 
 [sub_resource type="CircleShape2D" id=7]
@@ -101,6 +147,7 @@ position = Vector2( 0, -10 )
 texture = ExtResource( 1 )
 vframes = 20
 hframes = 10
+frame = 19
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/GreenDie = SubResource( 2 )
@@ -110,13 +157,14 @@ anims/GreenRoll = SubResource( 5 )
 anims/GreenSpit = SubResource( 6 )
 
 [node name="Light2D" type="Light2D" parent="."]
+visible = false
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 3 )
 color = Color( 0.352941, 0.992157, 0.572549, 1 )
 energy = 1.49
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 4
+collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]

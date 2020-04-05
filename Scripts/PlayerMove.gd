@@ -1,15 +1,19 @@
 extends KinematicBody2D
 
+const Attacks = preload("res://Scripts/Attacks.gd")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 export var speed = 45
 export(int) var health = 20
+export(float) var dmg_done = 3
+export(float) var crit_chance = .23
 
 const attack_time = 0.9
 
 var attack_timer
 var velocity = Vector2()
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,8 +38,12 @@ func attack_done():
 	var enemies = $Area2D.get_overlapping_bodies();
 	print("count:" + str(enemies.size()))
 	for enemy in enemies:
-		enemy.pop();
-		print(str(enemy.health));
+		var severity = Attacks.get_severity(crit_chance)
+		print("severity found= " + str(severity))
+		enemy.handle_attack(dmg_done, Attacks.AttackType.Normal, severity)
+
+func handle_attack():
+	print("ow")
 
 func set_animation(name):
 	if attack_timer >= attack_time:

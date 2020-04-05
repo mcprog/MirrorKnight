@@ -1,6 +1,6 @@
 extends Area2D
 
-const Language = preload("res://Language.gd")
+const Language = preload("res://Scripts/Language.gd")
 
 # Declare member variables here. Examples:
 # var a = 2

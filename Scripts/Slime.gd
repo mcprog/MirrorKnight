@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
-const Attacks = preload("res://Attacks.gd")
+const Attacks = preload("res://Scripts/Attacks.gd")
+const HitPopup = preload("res://Scenes/HitPopup.tscn")
 
 const jump_distance = 13
 const scan_speed = 100
@@ -15,6 +16,7 @@ enum ColorType {
 	Green, Blue, Red, Yellow
 }
 
+var prev_state
 var state
 var next_state
 
@@ -37,6 +39,8 @@ var pulse_speed_factor = 1
 
 var armor = Attacks.NoArmor
 
+var victim;
+
 var velocity = Vector2();
 
 # Called when the node enters the scene tree for the first time.
@@ -47,42 +51,68 @@ func _ready():
 func set_animation(state, color_type):
 	$AnimationPlayer.play(ColorType.keys()[color_type] + State.keys()[state])
 
-func handle_attack(damage):
+func handle_attack(damage, type, severity):
+	print("raw dmg=" + str(damage))
 	next_state = State.Roll
-	#var dmg = Attacks.effective_damage()
+	var dmg = Attacks.effective_damage(damage, type, severity, armor)
+	print("dmg=" + str(dmg))
+	var instance = HitPopup.instance()
+	instance.val = dmg
+	instance.position = position
+	print(str(instance.position))
+	get_parent().add_child(instance)
+	health -= dmg;
+	if (health <= 0):
+		next_state = State.Die
 
+# imma make you pop like that
 # for when the enemy is dead
 func pop():
 	get_tree().queue_delete(self)
 
+func attack():
+	if victim == null:
+		return;
+	victim.handle_attack()
+
+# returns true if neither ray sees the player
+func check_rays(delta) -> bool:
+	if $RayCast2D.is_colliding():
+		velocity = Vector2.DOWN.rotated($RayCast2D.rotation)
+		$RayCast2D2.rotation = $RayCast2D.rotation
+	elif $RayCast2D2.is_colliding():
+		velocity = Vector2.DOWN.rotated($RayCast2D2.rotation)
+		$RayCast2D.rotation = $RayCast2D2.rotation
+	else:
+		$RayCast2D.rotation_degrees += scan_speed * delta
+		$RayCast2D2.rotation_degrees -= scan_speed * delta
+		return true
+	return false
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	velocity = Vector2();
+	if next_state != null:
+		prev_state = state
+		state = next_state
+		next_state = null
+		set_animation(state, color)
+	
 	if state == State.Idle:
-		
-		if $RayCast2D.is_colliding():
-			velocity = Vector2.DOWN.rotated($RayCast2D.rotation)
-			$RayCast2D2.rotation = $RayCast2D.rotation
-			$RayCast2D2.rotation_degrees -= scan_speed * delta
-		elif $RayCast2D2.is_colliding():
-			velocity = Vector2.DOWN.rotated($RayCast2D2.rotation)
-			$RayCast2D.rotation = $RayCast2D2.rotation
-			$RayCast2D.rotation_degrees += scan_speed * delta
-		else:
-			$RayCast2D.rotation_degrees += scan_speed * delta
-			$RayCast2D2.rotation_degrees -= scan_speed * delta
+		if not check_rays(delta):
+			next_state = State.Jump
 	elif state == State.Roll:
 		# set rool animation, pause movement, do damage
 		pass
 	elif state == State.Jump:
-		# set jump animation, choose jump location, jump
-		pass
+		if check_rays(delta):
+			next_state = State.Idle
 	elif state == State.Spit:
 		# set spit animation, invuln to attacks,
 		pass
 	else:
 		# run death animation, then pop
-		pop()
+		pass
 		
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
@@ -103,6 +133,9 @@ func _process(delta):
 			$Light2D.energy -= delta * energy_speed * pulse_speed_factor
 		else:
 			energy_target = EnergyNormal
+
+func revert_state():
+	next_state = State.Idle
 	 
 func _physics_process(delta):
 	move_and_slide(velocity)
@@ -110,7 +143,10 @@ func _physics_process(delta):
 func _on_Area2D_body_entered(body):
 	energy_target = EnergyDe
 	pulse_speed_factor = 1;
+	next_state = State.Spit
+	victim = body
 
 
 func _on_Area2D_body_exited(body):
 	energy_target = EnergyNormal
+	victim = null

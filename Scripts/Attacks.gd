@@ -18,6 +18,7 @@ enum AttackSeverity {
 const Critical = 1.5
 const Super = 3
 const MaxProtection = 0.6
+const SuperRelativeChance = 0.5
 
 const RedArmor = {
 	"protection": .3,
@@ -55,8 +56,12 @@ const NoArmor = {
 	"projectile": 1
 }
 
+
+func _init():
+	randomize()
+
 # utility func to map factors to enum attack_type
-static func get_effective_factor(armor, attack_type):
+static func get_effective_factor(armor, attack_type) -> float:
 	if attack_type == AttackType.Normal:
 		return armor["normal"]
 	elif attack_type == AttackType.Red:
@@ -69,14 +74,20 @@ static func get_effective_factor(armor, attack_type):
 		return armor["projectile"]
 		
 
-static func effective_damage(damage, attack_type, attack_severity, armor):
+static func effective_damage(damage, attack_type, attack_severity, armor) -> float:
 	var factor = get_effective_factor(armor, attack_type)
 	# substract the damage scaled by the leftover armor protection
-	var calc_dmg = (damage - (damage * (1.0 - armor.protection))) * factor
+	var calc_dmg = (damage - (damage * armor.protection)) * factor
 	if attack_severity == AttackSeverity.Normal:
-		return int( calc_dmg )
+		return calc_dmg
 	elif attack_severity == AttackSeverity.Critical:
-		return int( calc_dmg * Critical )
+		return calc_dmg * Critical
 	else:
-		return int( calc_dmg * Super )
+		return calc_dmg * Super
 	
+static func get_severity(crit_chance):
+	if randf() <= crit_chance: #in range, got crit
+		if randf() <= SuperRelativeChance:
+			return AttackSeverity.Supercritical
+		return AttackSeverity.Critical
+	return AttackSeverity.Normal
