@@ -3,13 +3,35 @@ extends Object
 
 # lnaguage utility class
 
+#obsolete
 static func translate_word(sentence, index):
 	var words_array = sentence.to_lower().split(" ");
 	if index >= words_array.size():
 		return null;
 	return Lexicon[words_array[index]];
 
+static func translate_paragraph(paragraph, knowledge: Dictionary) -> String:
+	var words_array: Array = paragraph.split(" ");
+	var translated: String = "";
+	for word in words_array:
+		var sub_words = word.split("'")
+		for sub_word in sub_words:
+			if word.is_lower() and knowledge.has(word):
+				translated += knowledge[word].to_upper()
+			else:
+				translated += word
+	return translated
+
+
+const TestKnowledge = {
+	"bao": "person",
+	"tootoo": "hello",
+	"limo": "joy"
+}
+
 const Lexicon = {
+	".": ".",
+	"?": "?",
 	# root nouns
 	"bao": "person",
 	"chulu": "animal",
@@ -31,6 +53,9 @@ const Lexicon = {
 	"limo": "joy",
 	"tantos": "sadness",
 	"ipol": "image",
+	"eaha": "mother",
+	"zeeli": "child",
+	"yapulo": "day",
 	# root verbs
 	"finko": "to see",
 	"da": "to get",
@@ -48,6 +73,7 @@ const Lexicon = {
 	"recto": "to ask",
 	"volpus": "to want",
 	"quipu": "to do",
+	"wearlu": "to hear",
 	# root misc
 	"che": "belonging to",
 	"tis": "many",
@@ -58,5 +84,55 @@ const Lexicon = {
 	"koi": "no",
 	"iso": "please",
 	"wuipolk": "forward",
-	"tamla": "far"
+	"tamla": "far",
+	"eru": "why",
+	# pronouns
+	"eef": "me",
+	"daymas": "you",
+	"tas": "you scum",
+	"lo": "it",
+	"loo": "she",
+	"vee": "we",
+	"mast": "you all",
+	"eve": "they",
+	# compound: noun + noun = noun
+	"biskdoebo": "forest",
+	"vecunedoebo": "firepit",
+	"gadoebo": "field",
+	"heedoebo": "house",
+	"kipuah": "cave",
+	"tamalo": "that",
+	"ayupuah": "gold mine",
+	"ofoebosefrilleen": "bronze",
+	"opopo": "same",
+	"lobachi": "language",
+	"deooha": "grandmother",
+	"zeelibao": "youngling",
+	"loyapulo": "today",
+	"teeheedoebo": "town",
+	# compound: noun + verb = verb
+	"verbrisoth": "to fish",
+	"tamlavu": "to travel",
+	"preoivu": "to leave",
+	"preoida": "to retrieve",
+	"cheda": "to have",
+	"baochis": "to speak",
+	"isorecto": "to beg",
+	"wuipolkvu": "to advance",
+	"vecunevulpus": "to desire",
+	"limoquipu": "to enjoy",
+	"tootoodefosko": "to welcome",
+	"limochis": "to be well",
+	"boochis": "to call",
+	# compound: verb + noun = noun
+	"isobao": "hunter",
+	"verbrisothbao": "fisherman",
+	"tambao": "traveler",
+	"bremoleskuru": "thanks",
+	"koibao": "another",
+	"uruche": "gift",
+	"chisbao": "speaker",
+	"bachi": "speech",
+	"caolibao": "stranger",
+	"chisah": "reality"
 }
