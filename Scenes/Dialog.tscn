@@ -51,9 +51,9 @@ __meta__ = {
 
 [node name="Portrait" type="TextureRect" parent="Control/Panel"]
 margin_left = 10.0
-margin_top = 15.0
+margin_top = 10.0
 margin_right = 110.0
-margin_bottom = 115.0
+margin_bottom = 110.0
 rect_min_size = Vector2( 100, 100 )
 stretch_mode = 6
 __meta__ = {
@@ -100,6 +100,7 @@ margin_top = 10.0
 margin_right = -10.9999
 margin_bottom = 40.0
 rect_min_size = Vector2( 70, 30 )
+disabled = true
 text = "Next"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -113,6 +114,7 @@ margin_top = 50.9265
 margin_right = -10.6776
 margin_bottom = 80.9265
 rect_min_size = Vector2( 70, 30 )
+disabled = true
 text = "Previous"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -133,5 +135,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Translate" type="Button" parent="Control/Panel"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -25.0
+margin_right = 110.0
+margin_bottom = -5.0
+rect_min_size = Vector2( 70, 15 )
+text = "Translate"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
 anims/ShowText = SubResource( 1 )
+[connection signal="pressed" from="Control/Panel/Translate" to="." method="_on_Translate_pressed"]

@@ -10,23 +10,50 @@ static func translate_word(sentence, index):
 		return null;
 	return Lexicon[words_array[index]];
 
+static func is_lower(string) -> bool:
+	return string == string.to_lower();
+
+static func get_translation_score(paragraph, knowledge: Dictionary) -> int:
+	var words_array: Array = paragraph.split(" ");
+	var translated: String = "";
+	var words_count = 0.0;
+	var translated_count = 0.0;
+	for word in words_array:
+		var sub_words = word.split("'")
+		for sub_word in sub_words:
+			if is_lower(sub_word):
+				words_count += 1
+				if knowledge.has(sub_word):
+					translated_count += 1
+	return translated_count / words_count
+
+
 static func translate_paragraph(paragraph, knowledge: Dictionary) -> String:
 	var words_array: Array = paragraph.split(" ");
 	var translated: String = "";
 	for word in words_array:
 		var sub_words = word.split("'")
+		var apos = ""
+		if word != "." and word != "?":
+			translated += " "
+		
 		for sub_word in sub_words:
-			if word.is_lower() and knowledge.has(word):
-				translated += knowledge[word].to_upper()
+			translated += apos
+			if knowledge.has(sub_word):
+				translated += knowledge[sub_word].to_upper()
 			else:
-				translated += word
+				translated += sub_word
+			apos = "'"
+		
 	return translated
 
 
 const TestKnowledge = {
 	"bao": "person",
 	"tootoo": "hello",
-	"limo": "joy"
+	"limo": "joy",
+	"deooha": "grandmother",
+	"eef": "me"
 }
 
 const Lexicon = {

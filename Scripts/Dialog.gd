@@ -1,23 +1,31 @@
 extends CanvasLayer
 
-
+const Language = preload("res://Scripts/Language.gd")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 export(String) var dialog_key
 export(Texture) var portrait
 
+const NPCNameIndex = 0
+const LanguageIndex = 0
+const EnglishIndex = 1
+const TranslateThreshhold = .8
+
 var dialogs;
 
 var current_dialog;
 
+var dialog_index;
+
 const Dialogs = {
-	"WelcomeStanlu": [
+	"Sign": [
 		["Stanlu tootoodefosko", 
 		"welcome to Stanlu",
 		 0, 0]
 	],
 	"Grandmother Meefa": [
+		["deooha'Meefa", "Grandmother Meefa"],
 		["tootoo zeelibao . eef deooha'Meefa chis . daymas loyapulo limochis ?", 
 		"Hello youngling. I am grandmother Meefa. Are you well today?",
 		 1, -1],
@@ -33,13 +41,18 @@ func _ready():
 
 func load_dialogs():
 	dialogs = Dialogs[dialog_key]
-	$Control/Panel/Name.text = dialog_key
+	$Control/Panel/Name.text = dialogs[NPCNameIndex][EnglishIndex]
 	$Control/Panel/Portrait.texture = portrait
-	current_dialog = dialogs[0]
-	update_dialog(current_dialog)
+	dialog_index = 1
+	current_dialog = dialogs[dialog_index]
+	update_dialog(current_dialog[LanguageIndex])
 
-func update_dialog(new_dialog):
-	$Control/Panel/ScrollContainer/Line.text = new_dialog[0]
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func update_dialog(raw_text):
+	$Control/Panel/ScrollContainer/Line.text = raw_text
+
+
+func _on_Translate_pressed():
+	var trans_text = Language.translate_paragraph(current_dialog[LanguageIndex], Language.Lexicon)
+	update_dialog(trans_text)
+	var score = Language.get_translation_score(current_dialog[LanguageIndex], Language.Lexicon)
+	print(str(score))
