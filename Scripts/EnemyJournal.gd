@@ -1,4 +1,4 @@
-extends MarginContainer
+extends CanvasLayer
 
 
 # Declare member variables here. Examples:
@@ -30,11 +30,11 @@ const EnemyData = {
 var showing
 var in_transistion
 
-onready var dex = $Panel/Dex;
-onready var detail = $Panel/Detail;
-onready var kills_val = $Panel/Detail/Stats/KillsVal;
-onready var deaths_val = $Panel/Detail/Stats/DeathsVal;
-onready var exp_val = $Panel/Detail/Stats/ExpVal;
+onready var dex = $Control/Panel/Dex;
+onready var detail = $Control/Panel/Detail;
+onready var kills_val = $Control/Panel/Detail/Stats/KillsVal;
+onready var deaths_val = $Control/Panel/Detail/Stats/DeathsVal;
+onready var exp_val = $Control/Panel/Detail/Stats/ExpVal;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -44,7 +44,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_pressed("ui_home") and not in_transistion:
+	if Input.is_action_just_pressed("menu_enemies") and not in_transistion:
 		if showing:
 			hide();
 		else:
@@ -56,12 +56,12 @@ func click_detail(enemy_name: String) -> void:
 	detail.visible = true;
 	var enemy_data = EnemyData[enemy_name];
 	if enemy_data != null:
-		$Panel/Detail/About/Name.text = enemy_name.capitalize();
-		$Panel/Detail/About/Variety.text = enemy_data[KeyVariety];
-		$Panel/Detail/About/Weakness.text = enemy_data[KeyWeakness];
-		$Panel/Detail/About/Feature.text = enemy_data[KeyFeature];
-		$Panel/Detail/About/Drops.text = enemy_data[KeyDrops];
-		$Panel/Detail/Stats/Icon.texture = enemy_data[KeyIcon];
+		$Control/Panel/Detail/About/Name.text = enemy_name.capitalize();
+		$Control/Panel/Detail/About/Variety.text = enemy_data[KeyVariety];
+		$Control/Panel/Detail/About/Weakness.text = enemy_data[KeyWeakness];
+		$Control/Panel/Detail/About/Feature.text = enemy_data[KeyFeature];
+		$Control/Panel/Detail/About/Drops.text = enemy_data[KeyDrops];
+		$Control/Panel/Detail/Stats/Icon.texture = enemy_data[KeyIcon];
 		kills_val.text = "0";
 		deaths_val.text = "0";
 
@@ -71,12 +71,12 @@ func reset_panel():
 
 func show():
 	in_transistion = true
-	$AnimationPlayer.play("Show")
+	$Control/AnimationPlayer.play("Show")
 	showing = true
 	
 func hide():
 	in_transistion = true
-	$AnimationPlayer.play("Hide")
+	$Control/AnimationPlayer.play("Hide")
 	showing = false
 
 func done_transition():

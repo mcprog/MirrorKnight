@@ -18,6 +18,8 @@ var current_dialog;
 
 var dialog_index;
 
+var leave_pressed
+
 const Dialogs = {
 	"Sign": [
 		["Stanlu tootoodefosko", 
@@ -56,3 +58,8 @@ func _on_Translate_pressed():
 	update_dialog(trans_text)
 	var score = Language.get_translation_score(current_dialog[LanguageIndex], Language.Lexicon)
 	print(str(score))
+
+
+func _on_Leave_pressed():
+	print("leave pressed")
+	$Control.visible = false

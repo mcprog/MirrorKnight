@@ -5,6 +5,7 @@ extends TextureButton
 # var a = 2
 # var b = "text"
 
+var perform_click = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,7 +16,7 @@ func clicked_down():
 	$AnimationPlayer.play("ClickUp")
 
 func clicked_up():
-	print("perform click")
+	perform_click = true
 
 
 func _on_BookButton_mouse_entered():

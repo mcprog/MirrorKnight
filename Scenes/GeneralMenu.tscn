@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Sprites/book.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/BookButton.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/journal.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/GeneralMenu.gd" type="Script" id=4]
 [ext_resource path="res://Sprites/map.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Words.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=7]
 resource_name = "ClickDown"
@@ -86,6 +87,20 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 5.0, 0.0 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "clicked_up"
+} ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -186,6 +201,20 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 5.0, 0.0 ]
 }
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "clicked_up"
+} ]
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "Wiggle"
@@ -285,6 +314,20 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 5.0, 0.0 ]
 }
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "clicked_up"
+} ]
+}
 
 [sub_resource type="Animation" id=12]
 resource_name = "Wiggle"
@@ -305,6 +348,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=14]
 resource_name = "Hide"
+length = 0.35
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer:rect_position")
 tracks/0/interp = 1
@@ -312,7 +357,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.35 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 100 ) ]
@@ -320,6 +365,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=13]
 resource_name = "Show"
+length = 0.35
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer:rect_position")
 tracks/0/interp = 1
@@ -327,7 +374,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.35 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 100 ), Vector2( 0, 0 ) ]
@@ -362,10 +409,12 @@ size_flags_horizontal = 3
 
 [node name="BookButton" type="TextureButton" parent="MarginContainer/HBoxContainer/Enemies"]
 margin_left = 29.0
+margin_top = 5.0
 margin_right = 109.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
 rect_pivot_offset = Vector2( 40, 40 )
+hint_tooltip = "Enemies: J"
 texture_normal = ExtResource( 1 )
 expand = true
 stretch_mode = 4
@@ -387,10 +436,12 @@ size_flags_horizontal = 3
 
 [node name="BookButton" type="TextureButton" parent="MarginContainer/HBoxContainer/Words"]
 margin_left = 29.0
+margin_top = 5.0
 margin_right = 109.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
 rect_pivot_offset = Vector2( 40, 40 )
+hint_tooltip = "Words: K"
 texture_normal = ExtResource( 3 )
 expand = true
 stretch_mode = 4
@@ -416,6 +467,7 @@ margin_right = 110.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
 rect_pivot_offset = Vector2( 40, 40 )
+hint_tooltip = "Map: M"
 texture_normal = ExtResource( 5 )
 expand = true
 stretch_mode = 4
@@ -432,6 +484,8 @@ anims/Wiggle = SubResource( 12 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Hide = SubResource( 14 )
 anims/Show = SubResource( 13 )
+
+[node name="Words" parent="." instance=ExtResource( 6 )]
 [connection signal="mouse_entered" from="MarginContainer/HBoxContainer/Enemies/BookButton" to="MarginContainer/HBoxContainer/Enemies/BookButton" method="_on_BookButton_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Enemies/BookButton" to="MarginContainer/HBoxContainer/Enemies/BookButton" method="_on_BookButton_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/HBoxContainer/Words/BookButton" to="MarginContainer/HBoxContainer/Words/BookButton" method="_on_BookButton_mouse_entered"]

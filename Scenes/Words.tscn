@@ -197,3 +197,4 @@ __meta__ = {
 anims/Hide = SubResource( 1 )
 anims/Show = SubResource( 2 )
 [connection signal="pressed" from="MarginContainer/Panel/Close" to="." method="_on_Close_pressed"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
