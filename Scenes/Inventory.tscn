@@ -1,0 +1,246 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Fonts/unzialish.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Sprites/slot.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/slot-hover.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/slot-pressed.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/slot-disabled.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/DragTexture.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/Slot.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/Inventory.gd" type="Script" id=8]
+
+[node name="Inventory" type="CanvasLayer"]
+script = ExtResource( 8 )
+slots = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 250
+custom_constants/margin_top = 100
+custom_constants/margin_left = 250
+custom_constants/margin_bottom = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+margin_left = 250.0
+margin_top = 100.0
+margin_right = 774.0
+margin_bottom = 500.0
+
+[node name="Label" type="Label" parent="MarginContainer/Panel"]
+anchor_right = 1.0
+margin_right = 524.0
+margin_bottom = 54.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = ExtResource( 1 )
+text = "Item Inventory"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -210.0
+margin_top = -165.0
+margin_right = 210.0
+margin_bottom = 165.0
+custom_constants/vseparation = 15
+custom_constants/hseparation = 15
+columns = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot0" type="TextureButton" parent="MarginContainer/Panel/GridContainer"]
+margin_right = 72.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 72, 72 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 3 )
+texture_focused = ExtResource( 2 )
+expand = true
+stretch_mode = 4
+script = ExtResource( 7 )
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/GridContainer/Slot0"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.0
+margin_top = -30.0
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 60, 60 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot1" type="TextureButton" parent="MarginContainer/Panel/GridContainer"]
+margin_left = 87.0
+margin_right = 159.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 72, 72 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 3 )
+texture_focused = ExtResource( 2 )
+expand = true
+stretch_mode = 4
+script = ExtResource( 7 )
+default_item = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/GridContainer/Slot1"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.0
+margin_top = -30.0
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 60, 60 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot2" type="TextureButton" parent="MarginContainer/Panel/GridContainer"]
+margin_left = 174.0
+margin_right = 246.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 72, 72 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 3 )
+texture_focused = ExtResource( 2 )
+expand = true
+stretch_mode = 4
+script = ExtResource( 7 )
+default_item = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/GridContainer/Slot2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.0
+margin_top = -30.0
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 60, 60 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot3" type="TextureButton" parent="MarginContainer/Panel/GridContainer"]
+margin_left = 261.0
+margin_right = 333.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 72, 72 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 3 )
+texture_focused = ExtResource( 2 )
+expand = true
+stretch_mode = 4
+script = ExtResource( 7 )
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/GridContainer/Slot3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.0
+margin_top = -30.0
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 60, 60 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot4" type="TextureButton" parent="MarginContainer/Panel/GridContainer"]
+margin_left = 348.0
+margin_right = 420.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 72, 72 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 3 )
+texture_focused = ExtResource( 2 )
+expand = true
+stretch_mode = 4
+script = ExtResource( 7 )
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/GridContainer/Slot4"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.0
+margin_top = -30.0
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 60, 60 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot5" type="TextureButton" parent="MarginContainer/Panel/GridContainer"]
+margin_top = 87.0
+margin_right = 72.0
+margin_bottom = 159.0
+rect_min_size = Vector2( 72, 72 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 3 )
+texture_focused = ExtResource( 2 )
+expand = true
+stretch_mode = 4
+script = ExtResource( 7 )
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/GridContainer/Slot5"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.0
+margin_top = -30.0
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 60, 60 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DragTexture" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 60, 60 )
+mouse_filter = 2
+expand = true
+stretch_mode = 5
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="MarginContainer/Panel/GridContainer/Slot0" to="MarginContainer/Panel/GridContainer/Slot0" method="_on_Slot_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/GridContainer/Slot1" to="MarginContainer/Panel/GridContainer/Slot1" method="_on_Slot_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/GridContainer/Slot2" to="MarginContainer/Panel/GridContainer/Slot2" method="_on_Slot_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/GridContainer/Slot3" to="MarginContainer/Panel/GridContainer/Slot3" method="_on_Slot_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/GridContainer/Slot4" to="MarginContainer/Panel/GridContainer/Slot4" method="_on_Slot_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/GridContainer/Slot5" to="MarginContainer/Panel/GridContainer/Slot5" method="_on_Slot_pressed"]

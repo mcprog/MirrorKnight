@@ -58,10 +58,12 @@ func _process(delta):
 				show()
 		elif Input.is_action_just_pressed("menu_words"):
 			toggle_menu($Words)
+		elif Input.is_action_just_pressed("menu_enemies"):
+			toggle_menu($EnemyJournal)
 	
 	if enemy_button.perform_click:
 		enemy_button.perform_click = false
-		print("performing the mufucking click")
+		show_menu($EnemyJournal)
 	elif word_button.perform_click:
 		word_button.perform_click = false
 		show_menu($Words)

@@ -23,16 +23,21 @@ func load_knowledge(): # called at begging of show animation
 		holder.add_child(copy)
 
 func show():
+	if in_transition:
+		return
 	in_transition = true
 	$AnimationPlayer.play("Show")
 	showing = true
 	
 
 func hide():
+	if in_transition:
+		return
 	in_transition = true
 	$AnimationPlayer.play("Hide")
 	showing = false
 
+# dont think i use this
 func toggle():
 	if in_transition:
 		return;

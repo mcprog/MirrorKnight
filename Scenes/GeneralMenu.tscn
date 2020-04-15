@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Sprites/book.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/BookButton.gd" type="Script" id=2]
@@ -6,6 +6,121 @@
 [ext_resource path="res://Scripts/GeneralMenu.gd" type="Script" id=4]
 [ext_resource path="res://Sprites/map.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/Words.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/EnemyJournal.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Sprites/backpack.png" type="Texture" id=8]
+
+[sub_resource type="Animation" id=15]
+resource_name = "ClickDown"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.784314, 0.784314, 0.784314, 1 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "clicked_down"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:margin_top")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 5 ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "ClickUp"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.784314, 0.784314, 0.784314, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:margin_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 5.0, 0.0 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "clicked_up"
+} ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "Wiggle"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.35, 0.45, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 10.0, -5.0, 2.0, 0.0 ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "ClickDown"
@@ -402,15 +517,40 @@ margin_top = 500.0
 margin_right = 724.0
 margin_bottom = 580.0
 
+[node name="Items" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
+margin_right = 103.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+
+[node name="BookButton" type="TextureButton" parent="MarginContainer/HBoxContainer/Items"]
+margin_left = 11.0
+margin_right = 91.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+rect_pivot_offset = Vector2( 40, 40 )
+hint_tooltip = "Enemies: J"
+texture_normal = ExtResource( 8 )
+expand = true
+stretch_mode = 4
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/HBoxContainer/Items/BookButton"]
+anims/ClickDown = SubResource( 15 )
+anims/ClickUp = SubResource( 16 )
+anims/Wiggle = SubResource( 17 )
+
 [node name="Enemies" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
-margin_right = 138.0
+margin_left = 107.0
+margin_right = 210.0
 margin_bottom = 80.0
 size_flags_horizontal = 3
 
 [node name="BookButton" type="TextureButton" parent="MarginContainer/HBoxContainer/Enemies"]
-margin_left = 29.0
-margin_top = 5.0
-margin_right = 109.0
+margin_left = 11.0
+margin_right = 91.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
 rect_pivot_offset = Vector2( 40, 40 )
@@ -429,15 +569,14 @@ anims/ClickUp = SubResource( 8 )
 anims/Wiggle = SubResource( 9 )
 
 [node name="Words" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
-margin_left = 142.0
-margin_right = 280.0
+margin_left = 214.0
+margin_right = 317.0
 margin_bottom = 80.0
 size_flags_horizontal = 3
 
 [node name="BookButton" type="TextureButton" parent="MarginContainer/HBoxContainer/Words"]
-margin_left = 29.0
-margin_top = 5.0
-margin_right = 109.0
+margin_left = 11.0
+margin_right = 91.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
 rect_pivot_offset = Vector2( 40, 40 )
@@ -456,14 +595,14 @@ anims/ClickUp = SubResource( 5 )
 anims/Wiggle = SubResource( 6 )
 
 [node name="Map" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
-margin_left = 284.0
+margin_left = 321.0
 margin_right = 424.0
 margin_bottom = 80.0
 size_flags_horizontal = 3
 
 [node name="BookButton" type="TextureButton" parent="MarginContainer/HBoxContainer/Map"]
-margin_left = 30.0
-margin_right = 110.0
+margin_left = 11.0
+margin_right = 91.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
 rect_pivot_offset = Vector2( 40, 40 )
@@ -486,6 +625,10 @@ anims/Hide = SubResource( 14 )
 anims/Show = SubResource( 13 )
 
 [node name="Words" parent="." instance=ExtResource( 6 )]
+
+[node name="EnemyJournal" parent="." instance=ExtResource( 7 )]
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/Items/BookButton" to="MarginContainer/HBoxContainer/Items/BookButton" method="_on_BookButton_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Items/BookButton" to="MarginContainer/HBoxContainer/Items/BookButton" method="_on_BookButton_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/HBoxContainer/Enemies/BookButton" to="MarginContainer/HBoxContainer/Enemies/BookButton" method="_on_BookButton_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Enemies/BookButton" to="MarginContainer/HBoxContainer/Enemies/BookButton" method="_on_BookButton_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/HBoxContainer/Words/BookButton" to="MarginContainer/HBoxContainer/Words/BookButton" method="_on_BookButton_mouse_entered"]

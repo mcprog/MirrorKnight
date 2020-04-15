@@ -39,16 +39,9 @@ onready var exp_val = $Control/Panel/Detail/Stats/ExpVal;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	reset_panel()
-	show()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if Input.is_action_just_pressed("menu_enemies") and not in_transistion:
-		if showing:
-			hide();
-		else:
-			show()
+
 
 
 func click_detail(enemy_name: String) -> void:
@@ -70,11 +63,15 @@ func reset_panel():
 	detail.visible = false;
 
 func show():
+	if in_transistion:
+		return
 	in_transistion = true
 	$Control/AnimationPlayer.play("Show")
 	showing = true
 	
 func hide():
+	if in_transistion:
+		return
 	in_transistion = true
 	$Control/AnimationPlayer.play("Hide")
 	showing = false
